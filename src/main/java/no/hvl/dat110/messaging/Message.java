@@ -10,13 +10,21 @@ public class Message {
 	// construction a Message with the data provided
 	public Message(byte[] data) {
 		
-		// TODO - START
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.constructor("Message"));
-			
-		// TODO - END
+		if (data.length != 0 && data.length < 128) {
+			this.data = data;
+		}
+		
+		else if (data.length == 0) {
+			System.out.println("Melding er tom");
+		}
+		
+		else if (data.length > 127) {
+			System.out.println("Melding er for lang");
+		}
+
 	}
+	
 
 	public byte[] getData() {
 		return this.data; 
