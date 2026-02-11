@@ -73,8 +73,7 @@ public class MessageConnection {
 		}
 
 		return message;
-		
-		return message;
+
 		
 	}
 
