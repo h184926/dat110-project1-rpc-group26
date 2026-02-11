@@ -11,17 +11,15 @@ public class Message {
 	public Message(byte[] data) {
 		
 		
-		if (data.length != 0 && data.length < 128) {
-			this.data = data;
+		if (data == null) {
+			throw new IllegalArgumentException("Message kan ikke være null");
 		}
 		
-		else if (data.length == 0) {
-			System.out.println("Melding er tom");
+		if (data.length > 127) {
+			throw new IllegalArgumentException("Message kan være maks 127 bytes");
 		}
 		
-		else if (data.length > 127) {
-			System.out.println("Melding er for lang");
-		}
+		this.data = data;
 
 	}
 	
