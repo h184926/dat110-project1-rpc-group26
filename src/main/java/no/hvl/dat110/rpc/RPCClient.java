@@ -30,7 +30,6 @@ public class RPCClient {
 			connection.close();
 		}
 	}
-
 	/*
 	 Make a remote call om the method on the RPC server by sending an RPC request message and receive an RPC reply message
 
@@ -41,21 +40,15 @@ public class RPCClient {
 	public byte[] call(byte rpcid, byte[] param) {
 		
 		byte[] returnval = null;
-		
-		// TODO - START
 
-		/*
+		byte[] rpcRequest = RPCUtils.encapsulate(rpcid, param);
 
-		The rpcid and param must be encapsulated according to the RPC message format
+		Message requestMessage = new Message(rpcRequest);
+		connection.send(requestMessage);
 
-		The return value from the RPC call must be decapsulated according to the RPC message format
+		Message replyMessage = connection.receive();
+		returnval = RPCUtils.decapsulate(replyMessage.getData());
 
-		*/
-				
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
 		return returnval;
 		
 	}
