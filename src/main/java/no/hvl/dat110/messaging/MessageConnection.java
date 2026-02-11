@@ -42,9 +42,9 @@ public class MessageConnection {
 			data = MessageUtils.encapsulate(message);
 
 			outStream.write(data);
-			close();
-		}catch(IOException e){
 
+		}catch(IOException e){
+			e.printStackTrace();
 		}
 
 	}
@@ -55,21 +55,16 @@ public class MessageConnection {
 		byte[] data;
 		ServerSocket servSocket = null;
 
-		data = message.getData();
+		data = new byte[MessageUtils.SEGMENTSIZE];
 		try{
+
 			System.out.println("receiving message");
 
 			this.inStream.read(data);
 			message = MessageUtils.decapsulate(data);
-//			System.out.println("Received: ");
-//			for(byte b: data){
-//				System.out.print((byte) b);
-//			}
-//			System.out.println();
-			close();
 
 		}catch(IOException e){
-
+				e.printStackTrace();
 		}
 
 		return message;
