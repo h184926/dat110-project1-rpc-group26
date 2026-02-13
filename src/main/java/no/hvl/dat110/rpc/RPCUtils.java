@@ -2,38 +2,25 @@ package no.hvl.dat110.rpc;
 
 import java.nio.ByteBuffer;
 import java.util.Arrays;
-import no.hvl.dat110.TODO;
+import java.nio.charset.StandardCharsets;
+
 
 public class RPCUtils {
 	
 	public static byte[] encapsulate(byte rpcid, byte[] payload) {
 		
-		byte[] rpcmsg = null;
+		byte[] rpcmsg = new byte[1 + payload.length];
 		
-		// TODO - START
+		rpcmsg[0] = rpcid;
 		
-		// Encapsulate the rpcid and payload in a byte array according to the RPC message syntax / format
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		System.arraycopy(payload, 0, rpcmsg, 1, payload.length);
 		
 		return rpcmsg;
 	}
 	
 	public static byte[] decapsulate(byte[] rpcmsg) {
 		
-		byte[] payload = null;
-		
-		// TODO - START
-		
-		// Decapsulate the rpcid and payload in a byte array according to the RPC message syntax
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		byte[] payload = Arrays.copyOfRange(rpcmsg, 1, rpcmsg.length);
 		
 		return payload;
 		
@@ -42,14 +29,7 @@ public class RPCUtils {
 	// convert String to byte array
 	public static byte[] marshallString(String str) {
 		
-		byte[] encoded = null;
-		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		byte[] encoded = str.getBytes(StandardCharsets.UTF_8);
 		
 		return encoded;
 	}
@@ -57,28 +37,14 @@ public class RPCUtils {
 	// convert byte array to a String
 	public static String unmarshallString(byte[] data) {
 		
-		String decoded = null; 
-		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		String decoded = new String(data, StandardCharsets.UTF_8); 
 		
 		return decoded;
 	}
 	
 	public static byte[] marshallVoid() {
 		
-		byte[] encoded = null;
-		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-				
-		// TODO - END
+		byte[] encoded = new byte[0];
 		
 		return encoded;
 		
@@ -86,11 +52,10 @@ public class RPCUtils {
 	
 	public static void unmarshallVoid(byte[] data) {
 		
-		// TODO
 		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
+		if (data.length != 0) {
+			throw new IllegalArgumentException("Void RPC should not contain data");
+		}
 	}
 
 	// convert boolean to a byte array representation
