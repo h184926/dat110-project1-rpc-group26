@@ -117,31 +117,16 @@ public class RPCUtils {
 
 	// integer to byte array representation
 	public static byte[] marshallInteger(int x) {
-		
-		byte[] encoded = null;
-		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		
+		byte[] encoded = ByteBuffer.allocate(4).putInt(x).array();
+
 		return encoded;
 	}
 	
 	// byte array representation to integer
 	public static int unmarshallInteger(byte[] data) {
-		
-		int decoded = 0;
-		
-		// TODO - START 
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		
+
+		int decoded = ByteBuffer.wrap(data).getInt();
+
 		return decoded;
 		
 	}
