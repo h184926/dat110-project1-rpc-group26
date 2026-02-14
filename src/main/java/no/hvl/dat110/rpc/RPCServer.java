@@ -2,7 +2,6 @@ package no.hvl.dat110.rpc;
 
 import java.util.HashMap;
 
-import no.hvl.dat110.TODO;
 import no.hvl.dat110.messaging.MessageConnection;
 import no.hvl.dat110.messaging.Message;
 import no.hvl.dat110.messaging.MessagingServer;
@@ -28,6 +27,8 @@ public class RPCServer {
 		// the stop RPC method is built into the server
 		RPCRemoteImpl rpcstop = new RPCServerStopImpl(RPCCommon.RPIDSTOP,this);
 		
+		services.put(RPCCommon.RPIDSTOP, rpcstop);
+		
 		System.out.println("RPC SERVER RUN - Services: " + services.size());
 			
 		connection = msgserver.accept(); 
@@ -41,21 +42,24 @@ public class RPCServer {
 		   byte rpcid = 0;
 		   Message requestmsg, replymsg;
 		   
-		   // TODO - START
-		   // - receive a Message containing an RPC request
-		   // - extract the identifier for the RPC method to be invoked from the RPC request
-		   // - extract the method's parameter by decapsulating using the RPCUtils
-		   // - lookup the method to be invoked
-		   // - invoke the method and pass the param
-		   // - encapsulate return value 
-		   // - send back the message containing the RPC reply
-			
-		   if (true)
-				throw new UnsupportedOperationException(TODO.method());
-		   
-		   // TODO - END
+		   requestmsg = connection.receive();
 
-			// stop the server if it was stop methods that was called
+		   byte[] rpcmsg = requestmsg.getData();
+
+		   rpcid = rpcmsg[0];
+
+		   byte[] payload = RPCUtils.decapsulate(rpcmsg);
+
+		   RPCRemoteImpl service = services.get(rpcid);
+
+		   byte[] returnval = service.invoke(payload);
+
+		   byte[] replyrpc = RPCUtils.encapsulate(rpcid, returnval);
+
+		   replymsg = new Message(replyrpc);
+
+		   connection.send(replymsg);
+
 		   if (rpcid == RPCCommon.RPIDSTOP) {
 			   stop = true;
 		   }
